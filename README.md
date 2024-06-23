@@ -1,6 +1,8 @@
 # adb-state-detection-rules-home-assistant
 see: https://www.home-assistant.io/integrations/androidtv#custom-state-detection
 
+Because netflix has "previews" make sure to have a 15 second time-out to double check that the movie is playing or the preview is playing.
+
 ```json
 "state_detection_rules": {
   "com.android.vending": [
