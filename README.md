@@ -142,5 +142,4 @@ see: https://www.home-assistant.io/integrations/androidtv#custom-state-detection
     "idle"
   ]
 }
-},
 ```
