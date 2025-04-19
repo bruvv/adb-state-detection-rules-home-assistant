@@ -105,32 +105,43 @@ Extend Home Assistant’s Android TV integration with custom ADB‑based rul
 
 ---
 
-## 🔍 Finding `wake_lock_size`
+## 🔍 Determining `wake_lock_size`
 
-To tune `wake_lock_size` for a new app, you’ll need to see what value your Android TV is reporting:
+The `adb_response` attribute is only populated when you explicitly call the `GET_PROPERTIES` ADB command. Follow these steps to fetch your device’s current `wake_lock_size`:
 
-1. **Via Developer Tools → States**  
-   - Go to **Developer Tools → States** in HA.  
-   - Find your Android TV media_player entity (e.g. `media_player.living_room_tv`).  
-   - Look under **Attributes** for `wake_lock_size`.
-
-2. **Using a Template**  
-   - In **Developer Tools → Template**, paste:
-     ```jinja
-     {{ state_attr('media_player.YOUR_DEVICE_ENTITY_ID', 'wake_lock_size') }}
-     ```
-   - Click **Render** to see the current value.
-
-3. **With an ADB command**  
-   - In **Developer Tools → Services**, choose service **androidtv.adb_command**.  
-   - In **Service Data**, enter:
+1. **Invoke `GET_PROPERTIES`**  
+   - In HA go to **Developer Tools → Services**.  
+   - Select the service **androidtv.adb_command**.  
+   - Under **Service Data**, enter:
      ```yaml
      entity_id: media_player.YOUR_DEVICE_ENTITY_ID
-     command: dumpsys power
+     command: "GET_PROPERTIES"
      ```
-   - Call the service and check the log; look for the “Wake Locks” section to spot the active size.
+   - Click **Call Service**.  [oai_citation_attribution:0‡Home Assistant](https://www.home-assistant.io/integrations/androidtv)
 
-Once you’ve noted the `wake_lock_size`, plug it into your custom state detection rules as shown above.
+2. **View the `adb_response` JSON**  
+   - Go to **Developer Tools → States**, expand your `media_player.YOUR_DEVICE_ENTITY_ID`, and look under **Attributes → adb_response**.  
+   - You’ll see something like:
+     ```json
+     {
+       "screen_on": true,
+       "awake": true,
+       "wake_lock_size": 3,
+       "media_session_state": 3,
+       …  
+     }
+     ```  
+     That `"wake_lock_size": <number>` is the value you need.  [oai_citation_attribution:1‡Home Assistant](https://www.home-assistant.io/integrations/androidtv)
+
+3. **Extract the value via a template (optional)**  
+   - In **Developer Tools → Template**, paste and Render:
+     ```jinja
+     {{ state_attr('media_player.YOUR_DEVICE_ENTITY_ID', 'adb_response')['wake_lock_size'] }}
+     ```
+   - This will directly show the integer reported.  [oai_citation_attribution:2‡Home Assistant](https://www.home-assistant.io/integrations/androidtv)
+
+4. **Plug it into your `state_detection_rules`**  
+   Use that integer under `wake_lock_size` for your playing/paused rules as in the examples above.  [oai_citation_attribution:3‡Home Assistant](https://www.home-assistant.io/integrations/androidtv)
 
 ---
 
