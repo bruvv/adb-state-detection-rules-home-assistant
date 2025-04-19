@@ -1,13 +1,13 @@
 # ADB State Detection Rules for Home Assistant
 
-Extend Home Assistant’s Android TV integration with custom ADB‑based rules to accurately detect **idle**, **playing** and **paused** states for all your favorite apps.
+Extend Home Assistant’s Android TV integration with custom ADB‑based rules to accurately detect **idle**, **playing** and **paused** states for all your favorite apps.
 
 ---
 
 ## 🔧 Prerequisites
 
 - Home Assistant 2022.5 or newer  
-- Android TV integration installed and connected via ADB  
+- Android TV integration installed and connected via ADB  
 - Your Android TV device reachable from HA (over network or USB)
 
 ---
@@ -100,18 +100,18 @@ Extend Home Assistant’s Android TV integration with custom ADB‑based rules
         - idle
     ```
 
-4. **Important:** Netflix often shows 5 – 15 s previews that can fool your detection rules. In the UI, set **Timeout** to **15 seconds** so HA double‑checks before switching to “playing.”  
-5. Save and exit; HA will automatically reload the Android TV integration.
+4. **Important:** Netflix often shows 5 – 15 s previews that can fool your detection rules. In the UI, set **Timeout** to **15 seconds** so HA double‑checks before switching to “playing.”  
+5. Save and exit; HA will automatically reload the Android TV integration.
 
 ---
 
 ## 🔍 Finding `wake_lock_size`
 
-To tune `wake_lock_size` for a new app, you’ll need to see what value your Android TV is reporting:
+To tune `wake_lock_size` for a new app, you’ll need to see what value your Android TV is reporting:
 
 1. **Via Developer Tools → States**  
    - Go to **Developer Tools → States** in HA.  
-   - Find your Android TV media_player entity (e.g. `media_player.living_room_tv`).  
+   - Find your Android TV media_player entity (e.g. `media_player.living_room_tv`).  
    - Look under **Attributes** for `wake_lock_size`.
 
 2. **Using a Template**  
