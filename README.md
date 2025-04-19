@@ -136,7 +136,14 @@ The `adb_response` attribute is only populated when you explicitly call the `GET
 3. **Extract the value via a template (optional)**  
    - In **Developer Tools → Template**, paste and Render:
      ```jinja
-     {{ state_attr('media_player.YOUR_DEVICE_ENTITY_ID', 'adb_response')['wake_lock_size'] }}
+          {%- set raw = state_attr('media_player.YOUR_DEVICE_ENTITY_ID', 'adb_response') -%}
+          {%- set json_str = raw
+               | replace("'", '"')
+               | replace(' True', ' true')
+               | replace(' False', ' false')
+               | replace(' None', ' null') -%}
+          {%- set data = json_str | from_json -%}
+          {{ data.wake_lock_size }}
      ```
    - This will directly show the integer reported.
 
