@@ -117,7 +117,7 @@ The `adb_response` attribute is only populated when you explicitly call the `GET
      entity_id: media_player.YOUR_DEVICE_ENTITY_ID
      command: "GET_PROPERTIES"
      ```
-   - Click **Call Service**.  [oai_citation_attribution:0‡Home Assistant](https://www.home-assistant.io/integrations/androidtv)
+   - Click **Call Service**.
 
 2. **View the `adb_response` JSON**  
    - Go to **Developer Tools → States**, expand your `media_player.YOUR_DEVICE_ENTITY_ID`, and look under **Attributes → adb_response**.  
@@ -131,17 +131,17 @@ The `adb_response` attribute is only populated when you explicitly call the `GET
        …  
      }
      ```  
-     That `"wake_lock_size": <number>` is the value you need.  [oai_citation_attribution:1‡Home Assistant](https://www.home-assistant.io/integrations/androidtv)
+     That `"wake_lock_size": <number>` is the value you need.
 
 3. **Extract the value via a template (optional)**  
    - In **Developer Tools → Template**, paste and Render:
      ```jinja
      {{ state_attr('media_player.YOUR_DEVICE_ENTITY_ID', 'adb_response')['wake_lock_size'] }}
      ```
-   - This will directly show the integer reported.  [oai_citation_attribution:2‡Home Assistant](https://www.home-assistant.io/integrations/androidtv)
+   - This will directly show the integer reported.
 
 4. **Plug it into your `state_detection_rules`**  
-   Use that integer under `wake_lock_size` for your playing/paused rules as in the examples above.  [oai_citation_attribution:3‡Home Assistant](https://www.home-assistant.io/integrations/androidtv)
+   Use that integer under `wake_lock_size` for your playing/paused rules as in the examples above.
 
 ---
 
